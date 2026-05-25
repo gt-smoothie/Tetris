@@ -167,6 +167,9 @@ public class Mino {
             }
             KeyHandler.rightPressed = false;
         }
+
+        checkMovementCollision();
+
         if(bottomCollision){
             if(deactivating == false){
                 GamePanel.se.play(4,false);
