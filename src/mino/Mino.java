@@ -1,5 +1,6 @@
 package mino;
 
+import Main.GamePanel;
 import Main.KeyHandler;
 import Main.PlayManager;
 
@@ -126,6 +127,7 @@ public class Mino {
                 case 4: getDirection1();break;
             }
             KeyHandler.upPressed = false;
+            GamePanel.se.play(3,false);
 
         }
         checkMovementCollision();
@@ -161,6 +163,9 @@ public class Mino {
             KeyHandler.rightPressed = false;
         }
         if(bottomCollision){
+            if(deactivating == false){
+                GamePanel.se.play(4,false);
+            }
             deactivating = true;
         }else{
             autoDropCounter++;

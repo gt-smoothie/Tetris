@@ -75,6 +75,8 @@ public class PlayManager {
 
             if(currentMino.b[0].x == MINO_START_X && currentMino.b[0].y == MINO_START_Y){
                 gameOver = true;
+                GamePanel.music.stop();
+                GamePanel.se.play(2,false);
             }
 
             currentMino.deactivating = false;
@@ -145,6 +147,7 @@ public class PlayManager {
         }
 
         if(lineCount > 0){
+            GamePanel.se.play(1,false);
             int singleLineScore = 10 * level;
             score += singleLineScore * lineCount;
         }
