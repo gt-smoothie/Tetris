@@ -31,8 +31,10 @@ public class PlayManager {
     int lines;
     int score;
 
+    private static PlayManager instance;
 
-    public PlayManager(){
+
+    private PlayManager(){
 
         left_x = (GamePanel.WIDTH/2) - (WIDTH/2);
         right_x = left_x + WIDTH;
@@ -42,28 +44,33 @@ public class PlayManager {
         MINO_START_X = left_x + (WIDTH/2) - Block.SIZE;
         MINO_START_Y = top_y + Block.SIZE;
 
-        NEXTMINO_X = right_x + 180;
-        NEXTMINO_Y = top_y + 490;
+        NEXTMINO_X = right_x + 200;
+        NEXTMINO_Y = top_y + 500;
 
-        currentMino = pickMino();
+        currentMino = MinoFactory.getRandomMino();
         currentMino.setXY(MINO_START_X,MINO_START_Y);
-        nextMino = pickMino();
+        nextMino = MinoFactory.getRandomMino();
         nextMino.setXY(NEXTMINO_X,NEXTMINO_Y);
     }
-    private Mino pickMino(){
-        Mino mino  = null;
-        int i = new Random().nextInt(7);
 
-        switch (i){
-            case 0: mino = new Mino_L1();break;
-            case 1: mino = new Mino_L2();break;
-            case 2: mino = new Mino_Square();break;
-            case 3: mino = new Mino_Bar();break;
-            case 4: mino = new Mino_T();break;
-            case 5: mino = new Mino_Z1();break;
-            case 6: mino = new Mino_Z2();break;
+    public static PlayManager getInstance() {
+        if (instance == null) {
+            instance = new PlayManager();
         }
-            return mino;
+        return instance;
+    }
+
+    public void setNextMino() {
+
+        currentMino = nextMino;
+
+        if (currentMino == null) {
+            currentMino = MinoFactory.getRandomMino();
+            currentMino.setXY(MINO_START_X, MINO_START_Y);
+        }
+
+        nextMino = MinoFactory.getRandomMino();
+        nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
     }
     public void update(){
 
@@ -83,7 +90,7 @@ public class PlayManager {
 
             currentMino = nextMino;
             currentMino.setXY(MINO_START_X,MINO_START_Y);
-            nextMino = pickMino();
+            nextMino = MinoFactory.getRandomMino();
             nextMino.setXY(NEXTMINO_X,NEXTMINO_Y);
 
             checkDelete();
@@ -158,13 +165,24 @@ public class PlayManager {
         g2.setStroke(new BasicStroke(4f));
         g2.drawRect(left_x - 4, top_y - 4, WIDTH + 8, HEIGHT + 8);
 
+
+        g2.setColor(new Color(255, 255, 255, 35));
+
+        for(int i = 1; i < 12; i++) {
+            g2.drawLine(left_x + (i * Block.SIZE), top_y, left_x + (i * Block.SIZE), bottom_y);
+        }
+        for(int i = 1; i < 20; i++) {
+            g2.drawLine(left_x, top_y + (i * Block.SIZE), right_x, top_y + (i * Block.SIZE));
+        }
+
         int x = right_x + 100;
         int y = bottom_y - 200;
-        g2.drawRect(x, y, 200, 200);
+        g2.setColor(Color.white);
+        g2.drawRect(x + 20, y, 200, 200);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
         g2.setColor(Color.white);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.drawString("NEXT", x + 60, y + 60);
+        g2.drawString("NEXT", x + 80, y + 60);
 
         g2.drawRect(x, top_y, 250, 300);
         x += 40;
@@ -198,10 +216,10 @@ public class PlayManager {
 
         g2.setColor(Color.LIGHT_GRAY);
         g2.setFont(g2.getFont().deriveFont(50f));
-        if(gameOver){
-            x = left_x + 25;
-            y = top_y + 320;
-            g2.drawString("GAME OVER", x, y);
+        if(gameOver) {
+            g2.setColor(Color.RED);
+            g2.setFont(new Font("Arial", Font.BOLD, 50));
+            g2.drawString("GAME OVER", left_x + 10, top_y + HEIGHT/2);
         }
         else if(KeyHandler.pausePressed){
             x = left_x + 90;
@@ -212,8 +230,8 @@ public class PlayManager {
         x = 35;
         y = top_y + 320;
         g2.setColor(Color.white);
-        g2.setFont(new Font("Times New Roman", Font.ITALIC, 60));
-        g2.drawString("Tetris", x + 20, y);
+        g2.setFont(new Font("Times New Roman", Font.ITALIC, 110));
+        g2.drawString("Tetris", x + 60, y - 50);
 
     }
 }

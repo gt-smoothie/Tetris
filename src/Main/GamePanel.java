@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(new KeyHandler());
         this.setFocusable(true);
 
-        pm = new PlayManager();
+        pm = PlayManager.getInstance();
     }
 
     public void launchGame(){
