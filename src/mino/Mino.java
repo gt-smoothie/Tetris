@@ -176,6 +176,9 @@ public class Mino {
             }
             deactivating = true;
         }else{
+
+            deactivating = false;
+
             autoDropCounter++;
             if(autoDropCounter == PlayManager.dropInterval){
                 b[0].y += Block.SIZE;
