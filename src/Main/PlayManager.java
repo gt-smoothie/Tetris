@@ -161,6 +161,8 @@ public class PlayManager {
         int x = right_x + 100;
         int y = bottom_y - 200;
         g2.drawRect(x, y, 200, 200);
+        g2.setFont(new Font("Arial", Font.BOLD, 30));
+        g2.setColor(Color.white);
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("NEXT", x + 60, y + 60);
 
