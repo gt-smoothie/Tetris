@@ -191,7 +191,6 @@ public class PlayManager {
         g2.drawString("LINE: " + lines, x, y); y+=70;
         g2.drawString("SCORE: " + score, x, y);
 
-
         if (currentMino != null) {
             currentMino.draw(g2);
         }

@@ -39,6 +39,18 @@ public class KeyHandler implements KeyListener {
                 GamePanel.music.stop();
             }
         }
+        if (code == KeyEvent.VK_M) {
+            if (GamePanel.music.volumeScale > 0) {
+                GamePanel.music.volumeScale--;
+                GamePanel.music.checkVolume();
+            }
+        }
+        if (code == KeyEvent.VK_N) {
+            if (GamePanel.music.volumeScale < 5) {
+                GamePanel.music.volumeScale++;
+                GamePanel.music.checkVolume();
+            }
+        }
     }
 
     @Override
